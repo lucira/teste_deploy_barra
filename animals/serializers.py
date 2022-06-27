@@ -18,18 +18,23 @@ class AnimalSerializer(serializers.Serializer):
     def create(self, validated_data:dict):
          group_data = validated_data.pop("group")
          characteristics_data = validated_data.pop("characteristics")
-         print(group_data)
+        
          group,created = Groups.objects.get_or_create(**group_data)
-         #push
+
          characteristics_list = []
          for characteristics in characteristics_data:
              characteristics2,created = Characteristic.objects.get_or_create(**characteristics)
              characteristics_list.append(characteristics2)
-         #group = Groups(group_create)
-         #characteristics = Characteristic(characteristics_create)
 
          animal = Animal.objects.create(**validated_data,group=group)
-         #set array
          animal.characteristics.set(characteristics_list)
          return animal
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.age = validated_data.get('age', instance.age)
+        instance.weight = validated_data.get('weight', instance.weight)
+        instance.sex = validated_data.get('sex', instance.sex)
+        instance.save()
+        return instance     
 
