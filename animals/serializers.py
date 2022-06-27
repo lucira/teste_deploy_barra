@@ -30,11 +30,14 @@ class AnimalSerializer(serializers.Serializer):
          animal.characteristics.set(characteristics_list)
          return animal
 
-    def update(self, instance, validated_data):
-        instance.name = validated_data.get('name', instance.name)
-        instance.age = validated_data.get('age', instance.age)
-        instance.weight = validated_data.get('weight', instance.weight)
-        instance.sex = validated_data.get('sex', instance.sex)
+    def update(self, instance:Animal, validated_data:dict):
+
+        non_editable_keys = ("sex","group")
+        for key,value in validated_data.items():
+            if key in non_editable_keys:
+                raise KeyError
+            setattr(instance,key,value)
+       
         instance.save()
         return instance     
 
