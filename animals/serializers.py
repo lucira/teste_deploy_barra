@@ -13,23 +13,37 @@ class AnimalSerializer(serializers.Serializer):
     sex = serializers.CharField(max_length=15)
 
     group = GroupsSerializer()
-    characteristics =  serializers.ListField(child=CharacteristicsSerializer())
+    characteristics = CharacteristicsSerializer(many=True)
 
     def create(self, validated_data:dict):
          group_data = validated_data.pop("group")
          characteristics_data = validated_data.pop("characteristics")
-         print(group_data)
-         group,created = Groups.objects.get_or_create(**group_data)
-         #push
+        
+         group,_ = Groups.objects.get_or_create(**group_data)
+
          characteristics_list = []
          for characteristics in characteristics_data:
-             characteristics2,created = Characteristic.objects.get_or_create(**characteristics)
+             characteristics2,_ = Characteristic.objects.get_or_create(**characteristics)
              characteristics_list.append(characteristics2)
-         #group = Groups(group_create)
-         #characteristics = Characteristic(characteristics_create)
 
          animal = Animal.objects.create(**validated_data,group=group)
-         #set array
          animal.characteristics.set(characteristics_list)
          return animal
+
+    def update(self, instance:Animal, validated_data:dict):
+      
+        if "characteristics" in validated_data.keys():
+         characteristics_data = validated_data.pop("characteristics")
+         for characteristics in characteristics_data:
+             characteristics2,_ = Characteristic.objects.get_or_create(**characteristics)
+             instance.characteristics.add(characteristics2)
+
+        non_editable_keys = ("sex","group")
+        for key,value in validated_data.items():
+            if key in non_editable_keys:
+                raise KeyError(key)
+            setattr(instance,key,value)
+   
+        instance.save()
+        return instance     
 
