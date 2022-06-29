@@ -15,8 +15,8 @@ class AnimalView(APIView):
             serializer.is_valid(raise_exception=True)
             try:
               serializer.save()
-            except KeyError:
-              return Response({"error":"Náo pode atualizar"},status.HTTP_400_BAD_REQUEST)
+            except KeyError as e:
+              return Response(f'You can not update {e} property',status.HTTP_400_BAD_REQUEST)
 
             return Response(serializer.data)
 
@@ -35,7 +35,14 @@ class AnimalView(APIView):
        
 
         animals = Animal.objects.all()
+        print(animals)
         serializer = AnimalSerializer(animals,many=True)
+        # try:
+        #     print(serializer.data)
+        # except Exception as e:
+        #     print(e)
+
+
  
 
         return Response(serializer.data)
