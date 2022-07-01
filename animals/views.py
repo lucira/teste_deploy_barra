@@ -1,3 +1,4 @@
+from telnetlib import STATUS
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView,status
 from rest_framework.response import Response
@@ -19,7 +20,7 @@ class AnimalView(APIView):
             try:
               serializer.save()
             except KeyError as e:
-              return Response({"message":f'You can not update {e} property'},status.HTTP_400_BAD_REQUEST)
+              return Response({"message":f'You can not update {e} property'},status.HTTP_422_UNPROCESSABLE_ENTITY)
 
             return Response(serializer.data)
 
@@ -52,4 +53,4 @@ class AnimalView(APIView):
         serializer.is_valid(raise_exception=True)
   
         serializer.save()
-        return Response(serializer.data)    
+        return Response(serializer.data,status = status.HTTP_201_CREATED)    
