@@ -1,1 +1,1 @@
-web: gunicorn heroku-postgres-kenzie-pet.wsgi
+web: gunicorn kenziePet.wsgi
