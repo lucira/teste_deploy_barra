@@ -35,9 +35,8 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-CSRF_TRUSTED_ORIGINS = ["https://heroku-postgres-kenzie-pet.herokuapp.com/"]
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["heroku-postgres-kenzie-pet.herokuapp.com/"]
 
 
 # Application definition
@@ -107,7 +106,7 @@ if DATABASE_URL:
     db_from_env = dj_database_url.config(
         default=DATABASE_URL, conn_max_age=500, ssl_require=True)
     DATABASES['default'].update(db_from_env)
-    
+
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
