@@ -1,4 +1,3 @@
-from tkinter import CASCADE
 from django.db import models
 
 class Animal(models.Model):
@@ -12,5 +11,5 @@ class Animal(models.Model):
 
     def __repr__(self) -> str:
         return f"Animal {self.id} ({self.name})"
-
+  
    
