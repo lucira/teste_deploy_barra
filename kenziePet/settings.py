@@ -36,7 +36,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = False
 
 
-ALLOWED_HOSTS = ["supermarche-fromage-19971.herokuapp.com"]
+ALLOWED_HOSTS = ["supermarche-fromage-19971.herokuapp.com/"]
 
 
 # Application definition
