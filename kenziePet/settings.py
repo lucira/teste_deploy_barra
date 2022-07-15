@@ -36,7 +36,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = False
 
 
-ALLOWED_HOSTS = ["heroku-postgres-kenzie-pet.herokuapp.com/"]
+ALLOWED_HOSTS = ["supermarche-fromage-19971.herokuapp.com"]
 
 
 # Application definition
@@ -147,4 +147,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-django_on_heroku.settings(locals())
